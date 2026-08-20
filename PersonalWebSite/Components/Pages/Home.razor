@@ -1,0 +1,263 @@
+﻿@page "/"
+@inject IJSRuntime JS
+@inject PersonalWebSite.EmailService.IEmailService EmailService
+
+
+<PageTitle>احمدرضا گلمکانی نیا — توسعه‌دهنده فول‌استک .NET</PageTitle>
+
+<header>
+    <nav class="wrap">
+        <div class="logo"><span class="mark">A·G</span> احمدرضا گلمکانی نیا</div>
+        <ul class="nav-links">
+            <li><a href="#about">درباره</a></li>
+            <li><a href="#skills">مهارت‌ها</a></li>
+            <li><a href="#projects">پروژه‌ها</a></li>
+            <li><a href="#contact">تماس</a></li>
+        </ul>
+        <div class="nav-cta">
+            <a href="#contact" class="btn btn-ghost">صحبت کنیم</a>
+            <a href="#contact" class="btn btn-primary">شروع پروژه</a>
+            <button class="burger" @onclick="ToggleMenu" aria-label="منو">☰</button>
+        </div>
+    </nav>
+    <div class="mobile-menu @(_menuOpen ? "open" : "")">
+        <a href="#about" @onclick="CloseMenu">درباره</a>
+        <a href="#skills" @onclick="CloseMenu">مهارت‌ها</a>
+        <a href="#projects" @onclick="CloseMenu">پروژه‌ها</a>
+        <a href="#contact" @onclick="CloseMenu">تماس</a>
+        <a href="#contact" class="btn btn-primary" style="width:fit-content" @onclick="CloseMenu">شروع پروژه</a>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="wrap">
+        <div class="hero-text">
+            <span class="eyebrow"><span class="dot"></span> در دسترس برای پروژه و همکاری</span>
+            <h1>یک تیم کوچک نرم‌افزاری،<br>پشت <span class="hl">یک نفر با تجربه.</span></h1>
+            <p class="lead">
+                توسعه‌دهنده فول‌استک روی اکوسیستم دات‌نت هستم؛ از رابط کاربری با Blazor تا API و پایگاه‌داده.
+                اینجا نقطه شروع یک برند نرم‌افزاری‌ست: برای کارفرماها پروژه سفارشی می‌سازم و برای برنامه‌نویس‌ها
+                فضای همکاری روی محصول واقعی فراهم می‌کنم.
+            </p>
+            <div class="hero-ctas">
+                <a href="#contact" class="btn btn-primary">پروژه‌ت رو بگو</a>
+                <a href="#projects" class="btn btn-ghost">دیدن نمونه‌کارها</a>
+            </div>
+            <div class="hero-meta">
+                <span>پشته اصلی: <b>ASP.NET Core · Blazor · SQL Server</b></span>
+                <span>مقیم: <b>ایران</b></span>
+            </div>
+        </div>
+
+        <div class="stack">
+            <div class="flow"></div>
+            @foreach (var layer in _layers)
+            {
+                <div class="layer reveal">
+                    <span class="node"></span>
+                    <span class="tag">@layer.Tag</span>
+                    <div class="name">@layer.Name</div>
+                    <div class="tech">@layer.Tech</div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="wrap">
+        <div class="section-head reveal">
+            <span class="eyebrow">درباره کار</span>
+            <h2>دو مسیر، یک استاندارد کار</h2>
+            <p>هدف ساخت برندیه که محدود به یک تکنولوژی یا یک پروژه نیست؛ یا خودم و یا با تیمی از برنامه‌نویس‌های هم‌مسیر، هر پروژه‌ای که کارفرما بیاره رو با کیفیت یکسان تحویل می‌دیم.</p>
+        </div>
+        <div class="dual">
+            <div class="dual-card employer reveal">
+                <div class="icon">Ξ</div>
+                <h3>برای کارفرماها</h3>
+                <p>پروژه‌ات رو با یک نفر که مسئولیت سرتاسری کد رو می‌پذیره شروع کن، نه یک تیکت گمشده در صف یک آژانس بزرگ.</p>
+                <ul>
+                    <li>طراحی و توسعه سفارشی از صفر</li>
+                    <li>قیمت و قرارداد شفاف بر اساس پروژه</li>
+                    <li>امکان گسترش تیم در پروژه‌های بزرگ‌تر</li>
+                </ul>
+            </div>
+            <div class="dual-card dev reveal">
+                <div class="icon">λ</div>
+                <h3>برای برنامه‌نویس‌ها</h3>
+                <p>اگه روی پروژه‌های واقعی با استاندارد کد تمیز و معماری درست علاقه داری، جای همکاری اینجاست.</p>
+                <ul>
+                    <li>همکاری روی پروژه‌های سفارشی مشتری‌ها</li>
+                    <li>مشارکت در ساخت محصول اختصاصی برند</li>
+                    <li>کدریویو و هماهنگی بر پایه استانداردهای مشترک</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="skills">
+    <div class="wrap">
+        <div class="section-head reveal">
+            <span class="eyebrow">استک فنی</span>
+            <h2>ابزارهایی که هر روز باهاشون کار می‌کنم</h2>
+        </div>
+        <div class="skill-groups">
+            @foreach (var group in _skillGroups)
+            {
+                <div class="skill-group reveal">
+                    <span class="g-label">@group.Label</span>
+                    <div class="chip-row">
+                        @foreach (var chip in group.Chips)
+                        {
+                            <span class="chip">@chip</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <div class="wrap">
+        <div class="section-head reveal">
+            <span class="eyebrow">نمونه‌کارها</span>
+            <h2>چیزهایی که ساختمشون</h2>
+            <p>پروژه‌های تمرینی و واقعی که مسیر ساخت این برند رو شکل دادن.</p>
+        </div>
+        <div class="projects">
+            @foreach (var project in _projects)
+            {
+                <div class="project-card reveal">
+                    <span class="p-index">@project.Index</span>
+
+                    <h3><a target="_blank" href="@project.GithubLink">@project.Title</a></h3>
+                    <p>@project.Description</p>
+                    <div class="stack-line">@project.StackLine</div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="wrap">
+        <div class="contact-box reveal">
+            <div>
+                <h2>پروژه‌ای در ذهنت هست؟</h2>
+                <p>چند خط درباره‌ی پروژه یا همکاری‌ای که مدنظرته بنویس؛ در سریع‌ترین زمان پاسخ می‌دم.</p>
+                <div class="hero-meta" style="margin-top:6px">
+                    <span>ایمیل: <b>argolmakany@email.com</b></span>
+                </div>
+                <div class="hero-meta" style="margin-top:6px">
+                    <span>تلفن همراه: <b>09384080121</b></span>
+
+                </div>
+
+            </div>
+
+            <EditForm Model="_contactForm" OnValidSubmit="HandleSubmit">
+                <DataAnnotationsValidator />
+                <InputText class="field" @bind-Value="_contactForm.Name" placeholder="اسمت" />
+                <InputText class="field" @bind-Value="_contactForm.Email" placeholder="ایمیل" />
+                <InputTextArea class="field" @bind-Value="_contactForm.Message" placeholder="درباره پروژه یا همکاری بنویس..." />
+                <button type="submit" class="btn btn-primary">@(_submitted ? "ارسال شد ✓" : "ارسال پیام")</button>
+            </EditForm>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="wrap">
+        <span>© 2026 احمدرضا گلمکانی نیا — همه حقوق محفوظ است.</span>
+        <div class="socials">
+            <a href="https://github.com/AhmadrezaGolmakani">GitHub</a>
+            <a href="https://www.linkedin.com/in/ahmadreza-golmakani-ab237b305/">LinkedIn</a>
+            <a href="#">Telegram</a>
+        </div>
+    </div>
+</footer>
+
+@code {
+    private bool _menuOpen = false;
+
+    private record StackLayer(string Tag, string Name, string Tech);
+    private record SkillGroup(string Label, string[] Chips);
+    private record ProjectCard(string Index, string Title, string Description, string StackLine, string GithubLink);
+
+    private bool _sending = false;
+    private bool _submitted = false;
+    private string? _error;
+    private readonly ContactForm _contactForm = new();
+
+    private readonly List<StackLayer> _layers = new()
+    {
+        new("UI LAYER", "رابط کاربری", "Blazor · MudBlazor · HTML/CSS"),
+        new("SERVICE LAYER", "سرویس و API", "ASP.NET Core · Web API · MVC"),
+        new("DATA LAYER", "پایگاه‌داده", "SQL Server · Entity Framework"),
+    };
+
+    private readonly List<SkillGroup> _skillGroups = new()
+    {
+        new("FRONTEND", new[] { "Blazor", "MudBlazor", "HTML/CSS" }),
+        new("BACKEND", new[] { "C#", "ASP.NET Core", "MVC", "Web API" }),
+        new("DATA", new[] { "SQL Server", "Entity Framework" }),
+        new("TOOLING", new[] { "Visual Studio", "n8n", "Git" }),
+    };
+
+    private readonly List<ProjectCard> _projects = new()
+    {
+        new("01 / LumanGameShope", "فروشگاه اکانت بازی",
+            "پلتفرم خرید و فروش اکانت بازی، شامل مدیریت محصول، سفارش و پنل کاربری.",
+            "Blazor + MudBlazor / ASP.NET Core + SQL Server ","https://github.com/AhmadrezaGolmakani/LumanGameShope"),
+        new("02 / VilaAPI", "ثبت ویلا اجاره و خرید",
+            "API برای مدیریت آگهی‌های ویلا با قابلیت ثبت، جست‌وجو و دسته‌بندی ملک‌ها.",
+            "ASP.NET Core Web API","https://github.com/AhmadrezaGolmakani/VilaAPI"),
+        new("03 / Real-Estate", "پروژه املاک",
+            "سامانه نمایش و مدیریت آگهی‌های ملکی با رندر سمت سرور.",
+            "Razor Pages / SQL Server ","https://github.com/AhmadrezaGolmakani/Real-Estate"),
+    };
+
+    private class ContactForm
+    {
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Message { get; set; } = "";
+    }
+
+    private void ToggleMenu() => _menuOpen = !_menuOpen;
+    private void CloseMenu() => _menuOpen = false;
+
+    private async void HandleSubmit()
+    {
+        _sending = true;
+        _error = null;
+
+        try
+        {
+            await EmailService.SendContactMessageAsync(
+                _contactForm.Name,
+                _contactForm.Email,
+                _contactForm.Message);
+
+            _submitted = true;
+        }
+        catch (Exception)
+        {
+            _error = "ارسال پیام با مشکل مواجه شد. دوباره امتحان کن.";
+        }
+        finally
+        {
+            _sending = false;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("portfolioInterop.initReveal");
+        }
+    }
+}
