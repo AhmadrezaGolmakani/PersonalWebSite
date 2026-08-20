@@ -163,6 +163,10 @@
                 <InputText class="field" @bind-Value="_contactForm.Email" placeholder="ایمیل" />
                 <InputTextArea class="field" @bind-Value="_contactForm.Message" placeholder="درباره پروژه یا همکاری بنویس..." />
                 <button type="submit" class="btn btn-primary">@(_submitted ? "ارسال شد ✓" : "ارسال پیام")</button>
+                @if (_error is not null)
+                {
+                    <p style="color:red">@_error</p>
+                }
             </EditForm>
         </div>
     </div>
