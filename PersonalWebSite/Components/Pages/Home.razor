@@ -247,9 +247,10 @@
 
             _submitted = true;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            _error = "ارسال پیام با مشکل مواجه شد. دوباره امتحان کن.";
+            // _error = "ارسال پیام با مشکل مواجه شد. دوباره امتحان کن.";
+            _error = ex.Message;
         }
         finally
         {
