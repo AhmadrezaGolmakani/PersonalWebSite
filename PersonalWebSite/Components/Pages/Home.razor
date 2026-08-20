@@ -229,7 +229,7 @@
     private void ToggleMenu() => _menuOpen = !_menuOpen;
     private void CloseMenu() => _menuOpen = false;
 
-    private async void HandleSubmit()
+    private async Task HandleSubmit()
     {
         _sending = true;
         _error = null;
